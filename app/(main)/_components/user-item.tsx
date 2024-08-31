@@ -1,8 +1,21 @@
 "use client"
 
-import { Avatar, AvatarImage } from "@/components/ui/avatar"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { SignOutButton, useUser } from "@clerk/clerk-react"
+import { 
+    Avatar, 
+    AvatarImage 
+} from "@/components/ui/avatar"
+import { 
+    DropdownMenu, 
+    DropdownMenuContent, 
+    DropdownMenuItem, 
+    DropdownMenuLabel, 
+    DropdownMenuSeparator, 
+    DropdownMenuTrigger 
+} from "@/components/ui/dropdown-menu"
+import { 
+    SignOutButton, 
+    useUser 
+} from "@clerk/clerk-react"
 import { ChevronsLeftRight } from "lucide-react"
 
 export default function UserItem() {
@@ -17,7 +30,7 @@ export default function UserItem() {
                             <AvatarImage src={user?.imageUrl} />
                         </Avatar>
                         <span>
-                            {user?.firstName}&apos;s Jotin
+                            {user?.firstName}&apos;s Jotion
                         </span>
                     </div>
                     <ChevronsLeftRight className="ml-2 rotate-90 text-muted-foreground h-4 w-4"  />

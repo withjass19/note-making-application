@@ -1,6 +1,9 @@
 import { v } from 'convex/values';
 
-import { mutation, query } from "./_generated/server";
+import { 
+    mutation, 
+    query 
+} from "./_generated/server";
 import { Doc, Id } from "./_generated/dataModel";
 
 // export const get = query({
@@ -34,8 +37,8 @@ export const getSideBar = query({
         .query("documents")
         .withIndex("by_user_parent", (q) =>
             q
-            .eq("userId", userId)
-            .eq("parentDocument", args.parentDocument)
+             .eq("userId", userId)
+             .eq("parentDocument", args.parentDocument)
         )
         .filter((q) =>
             q.eq(q.field("isArchived"), false)
@@ -43,7 +46,7 @@ export const getSideBar = query({
         .order("desc")
         .collect();
 
-        return documents;
+      return documents;
     },
 })
 
