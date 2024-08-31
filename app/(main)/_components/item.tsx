@@ -9,6 +9,10 @@ import {
   Plus
 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 interface ItemProps{
   id?: Id<"documents">;
@@ -35,12 +39,34 @@ export const Item = ({
   onExpand,
   level = 0,
 }: ItemProps) => {
+  const create = useMutation(api.documents.create);
+  const router = useRouter();
 
   const handleExpand = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     event.stopPropagation();
     onExpand?.();
+  }
+
+  const onCreate = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    event.stopPropagation();
+    if(!id) return;
+    const promise = create({ title: "Untitled", parentDocument: id})
+       .then((documentId) => {
+        if(!expanded){
+          onExpand?.();
+        }
+        // router.push(`/documents/${documentId}`);
+       })
+
+    toast.promise(promise, {
+      loading: "Create a new note...",
+      success: "New note create!",
+      error: "Error creating note",
+    })
   }
 
   const CheveronIcon = expanded ? ChevronDown : ChevronRight;
@@ -86,6 +112,8 @@ export const Item = ({
       {!!id && (
         <div className="ml-auto flex items-center gap-x-2">
           <div 
+            role="button"
+            onClick={onCreate}
             className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-300 dark:bg-neutral-600"
           >
             <Plus className="h-4 w-4 text-muted-foreground"/>
