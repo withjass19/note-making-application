@@ -10,7 +10,7 @@ import {
     Settings, 
     Trash
 } from "lucide-react"
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import React, { ElementRef, useEffect, useRef, useState } from "react"
 import { useMediaQuery } from "usehooks-ts";
 import UserItems from "./user-item";
@@ -23,10 +23,12 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { TrashBox } from "./trash-box"
 import { useSearch } from "@/hooks/use-seach";
 import { useSettings } from "@/hooks/use-settings";
+import Navbar from "./navbar";
 
 export const Navigation = () => {
     const settings = useSettings();
     const search = useSearch();
+    const params = useParams();
     const pathname = usePathname();
     const isMobile = useMediaQuery("(max-width: 769px)");
     const create = useMutation(api.documents.create);
@@ -205,9 +207,17 @@ export const Navigation = () => {
                     isMobile && "left-0 w-full"
                 )}
             >
-                <nav className="bg-transparent px-3 py-2 w-full">
-                    {isCollapsed && <MenuIcon className="h-6 w-6 text-muted-foreground" onClick={resetWidth}/>}
-                </nav>
+
+                {!!params.documentId?(
+                    <Navbar
+                        isCollapsed={isCollapsed}
+                        onResetWidth={resetWidth}
+                    />
+                ): (
+                    <nav className="bg-transparent px-3 py-2 w-full">
+                        {isCollapsed && <MenuIcon className="h-6 w-6 text-muted-foreground" onClick={resetWidth}/>}
+                    </nav>
+                )}
             </div>
             {/* <aside 
                 ref={sidebarRef}
